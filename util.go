@@ -1,10 +1,10 @@
 package main
 
 import (
-  "log"
-  "regexp"
-  "strings"
-  "strconv"
+	"log"
+	"regexp"
+	"strconv"
+	"strings"
 )
 
 // Passes the text and looks for a username.

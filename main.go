@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
-	"strconv"
 	"runtime"
+	"strconv"
 
 	"gopkg.in/alecthomas/kingpin.v1"
 
@@ -24,15 +24,15 @@ var (
 
 func main() {
 	kingpin.Version("0.0.1")
-  kingpin.CommandLine.Help = "Karma bot for Slack."
-  kingpin.Parse()
+	kingpin.CommandLine.Help = "Karma bot for Slack."
+	kingpin.Parse()
 
 	// This allows us to serve more than a single request at a time.
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	// Start up the webserver.
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(*cliPort, nil)
+	http.ListenAndServe(":"+*cliPort, nil)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -57,7 +57,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	response := Response{
 		Username: *cliBotName,
 		Emoji:    *cliBotEmoji,
-		Channel:  "#"+channel,
+		Channel:  "#" + channel,
 	}
 	response.Send(*cliCallback)
 
@@ -72,7 +72,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	user, err = getUser(text)
 	if err != nil {
 		amount = s.Get(author)
-		response.Text = author+" has "+strconv.Itoa(amount)+" karma"
+		response.Text = author + " has " + strconv.Itoa(amount) + " karma"
 		response.Send(*cliCallback)
 		return
 	}
@@ -81,7 +81,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	amount = increaseAmount(text)
 	if amount > 0 {
 		s.Increase(user, amount)
-		response.Text = author+" gave "+user+" "+strconv.Itoa(amount)+" karma"
+		response.Text = author + " gave " + user + " " + strconv.Itoa(amount) + " karma"
 		response.Send(*cliCallback)
 		return
 	}
@@ -90,7 +90,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	amount = decreaseAmount(text)
 	if amount > 0 {
 		s.Decrease(user, amount)
-		response.Text = author+" deducted "+strconv.Itoa(amount)+" karma off "+user
+		response.Text = author + " deducted " + strconv.Itoa(amount) + " karma off " + user
 		response.Send(*cliCallback)
 		return
 	}
@@ -98,6 +98,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// By this stage I think we can assume the user wants the amount associated
 	// with a user.
 	amount = s.Get(user)
-	response.Text = author+" has "+strconv.Itoa(amount)+" karma"
+	response.Text = author + " has " + strconv.Itoa(amount) + " karma"
 	response.Send(*cliCallback)
 }

@@ -4,10 +4,10 @@ import (
 	"log"
 	"strconv"
 
-	"gopkg.in/alecthomas/kingpin.v1"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"gopkg.in/alecthomas/kingpin.v1"
 
 	storage "github.com/nickschuch/karma/storage"
 )
@@ -47,7 +47,12 @@ func (p *DynamoDBStorage) Get(n string) int {
 	// Look for the value inside the list of items.
 	for k, s := range resp.Item {
 		if k == valueName {
-			strconv.Atoi(*s.N)
+			amount, err := strconv.Atoi(*s.N)
+			if err != nil {
+				log.Println("Failed to interpret the karma value for", n)
+				return 0
+			}
+			return amount
 		}
 	}
 
