@@ -25,7 +25,9 @@ $ export KARMA_CALLBACK=http://example.com
 $ karma
 ```
 
-**Container**
+**Docker**
+
+Available here: https://github.com/nickschuch/karma-docker
 
 ```bash
 $ cat << EOF > ~/karma.env
