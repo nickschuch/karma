@@ -5,19 +5,19 @@ A simple karma bot for Slack.
 
 ## Setup
 
-*Binary*
+**Binary**
 
 ```bash
 $ karma --port=8080 --token=1234 --trigger=karma --storage=dynamodb
 ```
 
-*Container*
+**Container**
 
 @todo
 
 ## Usage
 
-*Give karma*
+**Give karma**
 
 ```
 karma nickschuch++
@@ -27,7 +27,7 @@ karma nickschuch++
 karma nickschuch+=10
 ```
 
-*Take karma*
+**Take karma**
 
 ```
 karma nickschuch--
@@ -37,13 +37,13 @@ karma nickschuch--
 karma nickschuch-=10
 ```
 
-*Check karma my karma (if matches username)*
+**Check karma my karma (if matches username)**
 
 ```
 karma
 ```
 
-*Check karma of others*
+**Check karma of others**
 
 ```
 karma nickschuch
