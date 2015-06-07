@@ -7,7 +7,13 @@ A simple karma bot for Slack.
 
 *Binary*
 
+```bash
+$ karma --port=8080 --token=1234 --trigger=karma --storage=dynamodb
+```
+
 *Container*
+
+@todo
 
 ## Usage
 

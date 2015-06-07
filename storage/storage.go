@@ -8,8 +8,8 @@ import (
 type Storage interface {
 	Get(string) int
 	Set(string, int)
-  Increase(string, int)
-  Decrease(string, int)
+	Increase(string, int)
+	Decrease(string, int)
 }
 
 var (
@@ -36,4 +36,12 @@ func New(name string) (Storage, error) {
 	}
 
 	return nil, ErrNotFound
+}
+
+func List() []string {
+	keys := make([]string, 0, len(storages))
+	for k := range storages {
+		keys = append(keys, k)
+	}
+	return keys
 }
