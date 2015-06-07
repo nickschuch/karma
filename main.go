@@ -68,7 +68,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		Emoji:    *cliEmoji,
 		Channel:  "#" + channel,
 	}
-	response.Send(*cliCallback)
 
 	// Now that we have gone through all the check we can connect to the backend.
 	s, err := storage.New(*cliBackend)
