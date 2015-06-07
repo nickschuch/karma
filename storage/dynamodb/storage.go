@@ -13,8 +13,8 @@ import (
 )
 
 var (
-	cliAWSRegion = kingpin.Flag("aws-region", "The region DynamoDB runs.").Default("us-west-2").OverrideDefaultFromEnvar("KARMA_AWS_REGION").String()
-	cliAWSTable  = kingpin.Flag("karma", "The table to store the data.").Default("karma").OverrideDefaultFromEnvar("KARMA_AWS_TABLE").String()
+	cliAWSRegion = kingpin.Flag("dynamodb-region", "The region DynamoDB runs.").Default("us-west-2").OverrideDefaultFromEnvar("KARMA_DYNAMODB_REGION").String()
+	cliAWSTable  = kingpin.Flag("dynamodb-table", "The table to store the data.").Default("karma").OverrideDefaultFromEnvar("KARMA_DYNAMODB_TABLE").String()
 	keyName      = "Username"
 	valueName    = "Karma"
 )
