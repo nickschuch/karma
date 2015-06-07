@@ -9,7 +9,7 @@ import (
 	"gopkg.in/alecthomas/kingpin.v1"
 
 	"github.com/nickschuch/karma/storage"
-	//_ "github.com/nickschuch/karma/storage/dynamodb"
+	_ "github.com/nickschuch/karma/storage/dynamodb"
 	_ "github.com/nickschuch/karma/storage/memory"
 )
 
