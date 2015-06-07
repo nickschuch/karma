@@ -7,27 +7,39 @@ import (
 	"strings"
 )
 
+var (
+	increaseSmall = "++"
+	increaseLarge = "+="
+	decreaseSmall = "--"
+	decreaseLarge = "-="
+)
+
 // Passes the text and looks for a username.
 func getUser(t string) (string, error) {
-	// Remove all except for characters.
-	reg, err := regexp.Compile("[^A-Za-z]+")
-	if err != nil {
-		log.Fatal(err)
+	removals := []string{
+		increaseSmall,
+		increaseLarge,
+		decreaseSmall,
+		decreaseLarge,
 	}
-	safe := reg.ReplaceAllString(t, "")
-	safe = strings.ToLower(strings.Trim(safe, "-"))
-	return safe, nil
+
+	// Remove all the increase / decrease flags.
+	for _, r := range removals {
+		t = strings.Replace(t, r, "", -1)
+	}
+
+	return t, nil
 }
 
 // Check if the text asked for an increase.
 func increaseAmount(t string) int {
 	// If the user gets a ++ result.
-	if strings.Contains(t, "++") {
+	if strings.Contains(t, increaseSmall) {
 		return 1
 	}
 
 	// If the user gets a += result.
-	if strings.Contains(t, "+=") {
+	if strings.Contains(t, increaseLarge) {
 		return findMultiAmount(t)
 	}
 
@@ -37,12 +49,12 @@ func increaseAmount(t string) int {
 // Check if the text asked for a decrease.
 func decreaseAmount(t string) int {
 	// If the user gets a -- result.
-	if strings.Contains(t, "--") {
+	if strings.Contains(t, decreaseSmall) {
 		return 1
 	}
 
 	// If the user gets a -= result.
-	if strings.Contains(t, "-=") {
+	if strings.Contains(t, decreaseLarge) {
 		return findMultiAmount(t)
 	}
 
