@@ -1,12 +1,13 @@
 package main
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	"log"
 	"net/http"
 	"regexp"
 	"strconv"
 	"strings"
+	"fmt"
 
 	"gopkg.in/alecthomas/kingpin.v1"
 
@@ -32,7 +33,7 @@ func main() {
   kingpin.Parse()
 
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(*cliPort, nil)
+	http.ListenAndServe(":"+*cliPort, nil)
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +42,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	// We need to ensure the the request has the correct token. Otherwise anyone
 	// can steal our karma!
-	token := r.Form.Get("token")
+	/*token := r.Form.Get("token")
 	if *cliToken != token {
 		log.Println("Invalid token", token)
 		return
@@ -65,7 +66,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	user, err := getUser(phrase)
 	if err != nil {
 		user = r.Form.Get("user_name")
-	}
+	}*/
 
 	// Now that we have gone through all the check we can connect to the backend.
 	s, err := storage.New(*cliBackend)
@@ -73,8 +74,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Println("Cannot start the backend: %v", cliBackend)
 	}
 
+	s.Set("nickschuch", 1)
+	user := s.Get("nickschuch")
+
+	fmt.Println(user)
+
 	// Check for increase request.
-	amount := increaseAmount(phrase)
+	/*amount := increaseAmount(phrase)
 	if amount > 0 {
 		s.Increase(user, amount)
 		return
@@ -97,7 +103,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
+	w.Write(js)*/
 }
 
 // Passes the text and looks for a username.
