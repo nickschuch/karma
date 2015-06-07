@@ -18,8 +18,8 @@ var (
 	cliToken    = kingpin.Flag("token", "Token to keep this bot secure.").Default("").OverrideDefaultFromEnvar("KARMA_TOKEN").String()
 	cliBackend  = kingpin.Flag("storage", "Storage backend for keeping karma.").Default("memory").OverrideDefaultFromEnvar("KARMA_STORAGE").String()
 	cliCallback = kingpin.Flag("callback", "The URL as setup in https://api.slack.com/incoming-webhooks").Default("").OverrideDefaultFromEnvar("KARMA_CALLBACK").String()
-	cliBotName  = kingpin.Flag("name", "Name your bot.").Default("Karma").OverrideDefaultFromEnvar("KARMA_NAME").String()
-	cliBotEmoji = kingpin.Flag("emoji", "Give your bot a custom image.").Default(":slack:").OverrideDefaultFromEnvar("KARMA_EMOJI").String()
+	cliName     = kingpin.Flag("name", "Name your bot.").Default("Karma").OverrideDefaultFromEnvar("KARMA_NAME").String()
+	cliEmoji    = kingpin.Flag("emoji", "Give your bot a custom image.").Default(":slack:").OverrideDefaultFromEnvar("KARMA_EMOJI").String()
 )
 
 func main() {
@@ -29,6 +29,15 @@ func main() {
 
 	// This allows us to serve more than a single request at a time.
 	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	// Print out some values.
+	log.Println("Port: "+*cliPort)
+	log.Println("Token: "+*cliToken)
+	log.Println("Backend: "+*cliBackend)
+	log.Println("Callback: "+*cliCallback)
+	log.Println("Name: "+*cliName)
+	log.Println("Emoji: "+*cliEmoji)
+	log.Println("Starting...")
 
 	// Start up the webserver.
 	http.HandleFunc("/", handler)
@@ -55,8 +64,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	// Build a response object which we can use to send back to Slack.
 	response := Response{
-		Username: *cliBotName,
-		Emoji:    *cliBotEmoji,
+		Username: *cliName,
+		Emoji:    *cliEmoji,
 		Channel:  "#" + channel,
 	}
 	response.Send(*cliCallback)
