@@ -7,4 +7,5 @@ go:
  - tip
 
 script:
- - go test -v ./...
+ - wget https://raw.githubusercontent.com/joewalnes/go-getter/master/go-getter && chmod a+x go-getter
+ - make test
