@@ -23,9 +23,13 @@ func getUser(t string) (string, error) {
 		decreaseLarge,
 	}
 
-	// Remove all the increase / decrease flags.
+	// If this contains the increase or decrease flag we take the name which is
+	// in front of the call.
 	for _, r := range removals {
-		t = strings.Replace(t, r, "", -1)
+		if strings.Contains(t, r) {
+			slice := strings.Split(t, r)
+			return slice[0], nil
+		}
 	}
 
 	return t, nil
