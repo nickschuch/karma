@@ -7,7 +7,9 @@ go:
  - tip
 
 script:
+  # Add the go-getter script for depencencies.
  - wget https://raw.githubusercontent.com/joewalnes/go-getter/master/go-getter
- - echo $PATH
  - chmod a+x go-getter
+ - mv go-getter $HOME/bin
+ # Run the test suite.
  - make test
