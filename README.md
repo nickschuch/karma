@@ -1,4 +1,4 @@
-Slack - Karma
+Slack - Karma [![Build Status](https://travis-ci.org/nickschuch/karma.svg?branch=master)](https://travis-ci.org/nickschuch/karma)
 =============
 
 A simple karma bot for Slack.
@@ -40,6 +40,13 @@ KARMA_CALLBACK="http://example.com"
 EOF
 $ docker run --env-file ~/karma.env -p 127.0.0.1:8080:8080 nickschuch/karma
 ```
+
+## Storage
+
+Currently Karma ships with 2 options for storage:
+
+* In memory - Only keeps the data for a single run.
+* AWS DynamoDB - Key value storage backend for long term persistence.
 
 ## Usage
 
