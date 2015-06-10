@@ -87,6 +87,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// Get the user from the message sent from Slack.
 	user = getUser(text)
 
+	// Stop users giving themselves karma.
+	if author == user {
+		amount = decreaseAmount(text)
+		s.Decrease(user, amount)
+		response.Text = author + " cheated themselves out of " + strconv.Itoa(amount) + " karma"
+		response.Send(*cliCallback)
+		return
+	}
+
 	// Check for increase request.
 	amount = increaseAmount(text)
 	if amount > 0 {
