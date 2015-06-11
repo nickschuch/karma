@@ -12,20 +12,24 @@ var (
 func TestGetUser(t *testing.T) {
 	var user string
 
+	// Base name.
+	user = getUser(name)
+	assert.Equal(t, name, user, "Found user '"+name+"'.")
+
 	// Small increase.
-	user, _ = getUser(name + "++")
+	user = getUser(name + "++")
 	assert.Equal(t, name, user, "Found user '"+name+"'.")
 
 	// Large increase.
-	user, _ = getUser(name + "+=10")
+	user = getUser(name + "+=10")
 	assert.Equal(t, name, user, "Found user '"+name+"'.")
 
 	// Small decrease.
-	user, _ = getUser(name + "--")
+	user = getUser(name + "--")
 	assert.Equal(t, name, user, "Found user '"+name+"'.")
 
 	// Large decrease.
-	user, _ = getUser(name + "-=10")
+	user = getUser(name + "-=10")
 	assert.Equal(t, name, user, "Found user '"+name+"'.")
 }
 

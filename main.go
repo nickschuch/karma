@@ -31,12 +31,12 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	// Print out some values.
-	log.Println("Port: "+*cliPort)
-	log.Println("Token: "+*cliToken)
-	log.Println("Backend: "+*cliBackend)
-	log.Println("Callback: "+*cliCallback)
-	log.Println("Name: "+*cliName)
-	log.Println("Emoji: "+*cliEmoji)
+	log.Println("Port: " + *cliPort)
+	log.Println("Token: " + *cliToken)
+	log.Println("Backend: " + *cliBackend)
+	log.Println("Callback: " + *cliCallback)
+	log.Println("Name: " + *cliName)
+	log.Println("Emoji: " + *cliEmoji)
 	log.Println("Starting...")
 
 	// Start up the webserver.
@@ -77,13 +77,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Now we attempt to find out which user this request is for.
-	user, err = getUser(text)
-	if err != nil {
+	if text == "" {
 		amount = s.Get(author)
 		response.Text = author + " has " + strconv.Itoa(amount) + " karma"
 		response.Send(*cliCallback)
 		return
 	}
+
+	// Get the user from the message sent from Slack.
+	user = getUser(text)
 
 	// Check for increase request.
 	amount = increaseAmount(text)
@@ -106,6 +108,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// By this stage I think we can assume the user wants the amount associated
 	// with a user.
 	amount = s.Get(user)
-	response.Text = author + " has " + strconv.Itoa(amount) + " karma"
+	response.Text = user + " has " + strconv.Itoa(amount) + " karma"
 	response.Send(*cliCallback)
 }

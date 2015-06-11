@@ -15,7 +15,7 @@ var (
 )
 
 // Passes the text and looks for a username.
-func getUser(t string) (string, error) {
+func getUser(t string) string {
 	removals := []string{
 		increaseSmall,
 		increaseLarge,
@@ -28,11 +28,11 @@ func getUser(t string) (string, error) {
 	for _, r := range removals {
 		if strings.Contains(t, r) {
 			slice := strings.Split(t, r)
-			return slice[0], nil
+			return slice[0]
 		}
 	}
 
-	return t, nil
+	return t
 }
 
 // Check if the text asked for an increase.
