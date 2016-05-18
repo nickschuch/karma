@@ -1,44 +1,18 @@
 #!/usr/bin/make -f
 
-PROJCET=karma
-SHELL=/bin/bash
-MKDIR=mkdir
-GIT=git
 GO=go
-RM=rm -rf
-CROSS_BASH=source /opt/golang/cross/crosscompile.bash
+GB=gb
 
-SOURCE=.
-TARGETS=darwin-386 darwin-amd64 linux-386 linux-amd64 linux-arm
+darwin-amd64:
+	env GOOS=darwin GOARCH=amd64 $(GB) build
 
-all: test
+linux-amd64:
+	env GOOS=linux GOARCH=amd64 $(GB) build
 
-build: deps
-	@echo "Building..."
-	@$(GO) build -o bin/$(PROJCET) $(SOURCE)
-
-deps:
-	@echo "Downloading libraries..."
-	go-getter Gofile
-
-xbuild: deps dirs
-	@for target in $(TARGETS); do \
-		echo "Building for $$target..."; \
-		$(CROSS_BASH) && \
-		$(GO)-$$target build -o bin/$(PROJCET)-$$target $(SOURCE); \
-	done;
-
-dirs:
-	@$(MKDIR) -p bin
-
-test: build
-	@echo "Running tests..."
-	@$(GO) test ./...
+all: test clean darwin-amd64 linux-amd64
 
 clean:
-	@echo "Cleaning up binaries..."
-	$(RM) bin
+	rm -fR pkg bin
 
-coverage:
-	@echo "Build code coverage..."
-	coverage
+test:
+	$(GB) test -test.v

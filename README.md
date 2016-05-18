@@ -81,3 +81,30 @@ Currently Karma ships with 2 options for storage:
 ```
 /karma nickschuch
 ```
+
+## Building
+
+This project requires the build tool `gb`, please install with:
+
+```bash
+$ go get github.com/constabulary/gb/...
+```
+
+You can now build the project with:
+
+```bash
+$ make
+
+# Check they exist
+$ ls bin/karma-darwin-amd64
+```
+
+To build for Linux and Darwin run:
+
+```bash
+$ make all
+
+# Check they exist
+$ ls bin/karma-darwin-amd64
+$ ls bin/karma-linux-amd64
+```
